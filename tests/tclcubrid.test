@@ -1,0 +1,200 @@
+# tclcubrid.test --
+#
+#	Tests for the tclcubrid extesnion
+#
+
+loadTestedCommands
+package require cubrid
+
+# Please make sure CUBRID server daemon is running
+# Please make sure environment variable is setting correctly
+# Test setup
+
+set testhost localhost
+set testport 33000
+set database demo
+set username public
+set password ""
+
+#-------------------------------------------------------------------------------
+
+test tclcubrid-1.1 {create a connection, wrong # args} {*}{
+    -body {
+	cubrid db aaa
+    }
+    -returnCodes error
+    -match glob
+    -result {wrong # args*}
+}
+
+test tclcubrid-1.2 {create a connection, port} {*}{
+    -body {
+	cubrid ::db -host $testhost -port aaa \
+            -user $username -passwd $password -dbname $database
+    }
+    -returnCodes error
+    -match glob
+    -result {expected integer*}
+}
+
+test tclcubrid-1.3 {create a connection, successful} {*}{
+    -body {
+	set result [catch {cubrid ::db -host $testhost -port $testport \
+                     -dbname $database -user $username -passwd $password}]
+    }
+    -result 0
+}
+
+test tclcubrid-1.4 {set autocommit, successful} {*}{
+    -body {
+        set result [db setAutocommit 1]
+    }
+    -result 1
+}
+
+test tclcubrid-1.5 {get autocommit, successful} {*}{
+    -body {
+        set result [db getAutocommit]
+    }
+    -result 1
+}
+
+test tclcubrid-1.6 {set IsolationLevel} {*}{
+    -body {
+        set result [db setIsolationLevel readcommitted]
+    }
+    -result 1
+}
+
+test tclcubrid-1.7 {get IsolationLevel} {*}{
+    -body {
+        set result [db getIsolationLevel]
+    }
+    -result readcommitted
+}
+
+#-------------------------------------------------------------------------------
+
+test tclcubrid-2.1 {prepare statement, wrong # args} {*}{
+    -body {
+	::db prepare
+    }
+    -returnCodes error
+    -match glob
+    -result {wrong # args*}
+}
+
+test tclcubrid-2.2 {Create a table} {*}{
+    -body {
+       set stmt [db prepare "CREATE TABLE IF NOT EXISTS emp_test (name VARCHAR(20), age INT)"]
+       set result [$stmt execute]
+    }
+    -result 1
+}
+
+test tclcubrid-2.3 {close a statement} {*}{
+    -body {
+        $stmt close
+    }
+    -result 1
+}
+
+test tclcubrid-2.4 {Begin transaction} {*}{
+    -body {
+       set result [db setAutocommit 0]
+    }
+    -result 1
+}
+
+test tclcubrid-2.5 {Insert data} {*}{
+    -body {
+       set stmt [db prepare "INSERT INTO emp_test VALUES ('John', 23)"]
+       set result [$stmt execute]
+    }
+    -result 1
+}
+
+test tclcubrid-2.6 {close a statement} {*}{
+    -body {
+        $stmt close
+    }
+    -result 1
+}
+
+test tclcubrid-2.7 {Rollback} {*}{
+    -body {
+       db rollback
+       set result [db setAutocommit 1]
+    }
+    -result 1
+}
+
+test tclcubrid-2.8 {Begin transaction} {*}{
+    -body {
+       set result [db setAutocommit 0]
+    }
+    -result 1
+}
+
+test tclcubrid-2.9 {Insert data} {*}{
+    -body {
+       set stmt [db prepare "INSERT INTO emp_test VALUES ('CUBRID', 23)"]
+       set result [$stmt execute]
+    }
+    -result 1
+}
+
+test tclcubrid-2.10 {close a statement} {*}{
+    -body {
+        $stmt close
+    }
+    -result 1
+}
+
+test tclcubrid-2.11 {Commit} {*}{
+    -body {
+       db commit
+       set result [db setAutocommit 1]
+    }
+    -result 1
+}
+
+test tclcubrid-2.12 {Check data} {*}{
+    -body {
+       set stmt [db prepare "SELECT name FROM emp_test"]
+       $stmt execute
+
+       $stmt cursor 1 CURRENT
+       set result [dict get [$stmt fetch_row_dict] name]
+    }
+    -result CUBRID
+}
+
+test tclcubrid-2.13 {close a statement} {*}{
+    -body {
+        $stmt close
+    }
+    -result 1
+}
+
+test tclcubrid-2.14 {Drop a table} {*}{
+    -body {
+       set stmt [db prepare "DROP TABLE IF EXISTS emp_test"]
+       set result [$stmt execute]
+    }
+    -result 1
+}
+
+test tclcubrid-2.15 {close a statement} {*}{
+    -body {
+        $stmt close
+    }
+    -result 1
+}
+
+#-------------------------------------------------------------------------------
+
+catch {::db close}
+
+cleanupTests
+return

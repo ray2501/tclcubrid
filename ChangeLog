@@ -1,0 +1,121 @@
+2017-05-12  Danilo Chang
+
+    * Setup version to 0.9.5
+    * Improve set/multiset/sequence type handle for
+      fetch_row_list/fetch_row_dict method.
+      Now tclcubrid will return a Tcl list for set/multiset/sequence type.
+
+      It is an INCOMPATIBILITY change! User maybe need update source code.
+    * Add blob/clob write size check
+
+2016-12-08  Danilo Chang
+
+    * Setup version to 0.9.4
+    * Add Date/Time types with timezone support
+
+2016-11-14  Danilo Chang
+
+    * Setup version to 0.9.3
+    * Free memory when connect fail
+
+2016-11-06  Danilo Chang
+
+    * Setup version to 0.9.2
+    * Update Thread_Exit method
+
+2016-11-03  Danilo Chang
+
+    * Setup version to 0.9.1
+    * Update TDBC configure method
+
+2016-10-22  Danilo Chang
+
+    * Setup version to 0.9
+    * Add multiset type support
+
+2016-10-21  Danilo Chang
+
+    * CLOB/BLOB size limitation change to 1048576
+
+2016-10-04  Danilo Chang
+
+    * Setup version to 0.8
+    * Cleanup code
+
+2016-09-12  Danilo Chang
+
+    * Setup version to 0.7
+    * TDBC "tdbc::cubrid::connection create" parameters changed
+      It is an INCOMPATIBILITY change! User maybe need update source code.
+    * cubrid HANDLE add parameter -property
+      It is a POTENTIAL INCOMPATIBILITY change!
+    * Using cci_connect_with_url_ex to replace cci_connect_ex
+    * Setup version to 0.6
+
+2016-09-11  Danilo Chang
+
+    * Add last_insert_id method
+    * generic/tclcubrid.c: Update source code
+
+2016-09-01  Danilo Chang
+
+    * Setup version to 0.5
+    * TDBC: let user can use -isolation option when create a connection handle
+
+2016-08-31  Danilo Chang
+
+    * Setup version to 0.4
+
+2016-08-27  Danilo Chang
+
+    * Update test cases
+
+2016-08-18  Danilo Chang
+
+    * Setup version to 0.3
+
+2016-08-17  Danilo Chang
+
+    * Add set type support
+    * Add sequence type support
+    * Setup version to 0.2
+
+2016-08-16  Danilo Chang
+
+    * Add enum type support
+    * Add monetary type support
+    * Using cci_connect_ex to replace cci_connect_3_0 method
+
+2016-08-11  Danilo Chang
+
+    * Add bit/varbit type support back
+    * Update bind type name: int -> integer, short -> smallint
+
+2016-08-10  Danilo Chang
+
+    * CLOB/BLOB size limitation change to 131072
+    * Update STMT_HANDLE close method
+    * Remove bit/varbit type support, my code is not good enough
+    * Update bind method bit type handle
+
+2016-08-07  Danilo Chang
+
+    * Add TDBC driver initial version
+    * Fix set isolation level error
+
+2016-08-06  Danilo Chang
+
+    * Add get/set isolation level method
+    * Add CLOB/BLOB support (experiment function)
+
+2016-08-04  Danilo Chang
+
+    * Add LICENSE file and tclcubrid_SUSE.spec
+    * Initial: implement stmt command
+    * Initial: implement db command
+
+2016-08-03  Danilo Chang
+
+    * Initial: implement cubrid command
+    * Dump sample extension
+
