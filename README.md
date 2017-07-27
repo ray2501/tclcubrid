@@ -18,7 +18,7 @@ consisting of the database server, the broker, and the CUBRID Manager.
    the database and the broker.
 
 tclcubrid is a Tcl extension by using CUBRID
-[CCI (CCI Client Interface)](http://cubrid.org/manual/en/10.0/api/cci.html)
+[CCI (CCI Client Interface)](http://cubrid.org/manual/en/10.1/api/cci.html)
 driver to connect CUBRID. CUBRID CCI driver is connected through the CUBRID
 broker. I write this extension to research CUBRID and CCI (CCI Client Interface)
 driver.
@@ -46,10 +46,10 @@ Related Extension
 =====
 
 Tcl users can use [TDBC-ODBC](https://www.tcl.tk/man/tcl/TdbcodbcCmd/tdbc_odbc.htm) bridge via CUBRID
-[ODBC driver](http://cubrid.org/manual/en/10.0/api/odbc.html) to connect CUBRID database.
+[ODBC driver](http://cubrid.org/manual/en/10.1/api/odbc.html) to connect CUBRID database.
 
 Or you can try my other project [TDBCJDBC](https://github.com/ray2501/TDBCJDBC) via CUBRID
-[JDBC driver](http://cubrid.org/manual/en/10.0/api/jdbc.html) to connect CUBRID database.
+[JDBC driver](http://cubrid.org/manual/en/10.1/api/jdbc.html) to connect CUBRID database.
 
 
 License
