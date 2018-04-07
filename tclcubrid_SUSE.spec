@@ -3,7 +3,7 @@
 %define buildroot %{_tmppath}/%{name}
 
 Name:          tclcubrid
-Summary:       CUBRID CCI Client Interface wrapper for Tcl
+Summary:       Tcl wrapper for CUBRID CCI Client Interface
 Version:       0.9.5
 Release:       1
 License:       MIT
