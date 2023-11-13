@@ -9,7 +9,7 @@ extern "C" {
 #include <stdint.h>
 #include <time.h>
 #include "cas_cci.h"
-#include "cas_error.h"
+#include "broker_cas_error.h"
 #include "cubridStubs.h"
 
 MODULE_SCOPE Tcl_LoadHandle CubridInitStubs(Tcl_Interp*);

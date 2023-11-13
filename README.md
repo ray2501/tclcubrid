@@ -18,7 +18,7 @@ consisting of the database server, the broker, and the CUBRID Manager.
    the database and the broker.
 
 tclcubrid is a Tcl extension by using CUBRID
-[CCI (CCI Client Interface)](http://cubrid.org/manual/en/10.1/api/cci.html)
+[CCI (CCI Client Interface)](http://cubrid.org/manual/en/11.3/api/cci.html)
 driver to connect CUBRID. CUBRID CCI driver is connected through the CUBRID
 broker. I write this extension to research CUBRID and CCI (CCI Client Interface)
 driver.
