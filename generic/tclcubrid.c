@@ -523,13 +523,13 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
 
           if(res < 0) {
               Tcl_SetResult (interp, (char *)"clob new failed", NULL);
-	      return TCL_ERROR;
+              return TCL_ERROR;
           }
 
           res = cci_clob_write (pDb->connection, clob, 0, len, res_buf, &cci_error);
           if(res < 0) {
               Tcl_SetResult (interp, (char *)"clob write failed", NULL);
-	      return TCL_ERROR;
+              return TCL_ERROR;
           }
 
           res = cci_bind_param(pStmt->request, index, atype, (void *) clob, utype, 0);
@@ -544,7 +544,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
                 Tcl_SetResult (interp, (char *)"malloc clob data memory failed", NULL);
 
                 cci_clob_free(&clob); //Free clob memory
-	        return TCL_ERROR;
+                return TCL_ERROR;
               }
 
               clob_current->clob = clob;
@@ -559,7 +559,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
                 Tcl_SetResult (interp, (char *)"malloc clob data memory next failed", NULL);
 
                 cci_clob_free(&clob); //Free clob memory
-	        return TCL_ERROR;
+                return TCL_ERROR;
               }
 
               clob_next->clob = clob;
@@ -619,7 +619,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
                 Tcl_SetResult (interp, (char *)"malloc blob data memory next failed", NULL);
 
                 cci_blob_free(&blob); //Free blob memory
-	        return TCL_ERROR;
+                return TCL_ERROR;
               }
 
               blob_next->blob = blob;
@@ -646,7 +646,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
           }
 
           for (count = 0; count < len; count++) {
-	      set_array[count] = NULL;
+              set_array[count] = NULL;
           }
 
           set_null = (int *) malloc (sizeof(int) * len);
@@ -697,7 +697,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
           }
 
           for (count = 0; count < len; count++) {
-	      set_array[count] = NULL;
+              set_array[count] = NULL;
           }
 
           set_null = (int *) malloc (sizeof(int) * len);
@@ -748,7 +748,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
           }
 
           for (count = 0; count < len; count++) {
-	      set_array[count] = NULL;
+              set_array[count] = NULL;
           }
 
           set_null = (int *) malloc (sizeof(int) * len);
@@ -789,6 +789,16 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
           }
 
           res = cci_bind_param(pStmt->request, index, atype, res_buf, utype, 0);
+      } else if(strcmp(type, "json")==0) {
+          utype = CCI_U_TYPE_JSON;
+          atype = CCI_A_TYPE_STR;
+
+          res_buf = Tcl_GetStringFromObj(objv[4], &len);
+          if( !res_buf ) {
+            return TCL_ERROR;
+          }
+
+          res = cci_bind_param(pStmt->request, index, atype, res_buf, utype, 0);
       } else if(strcmp(type, "null")==0) {
           utype = CCI_U_TYPE_NULL;
           atype = CCI_A_TYPE_STR;
@@ -800,7 +810,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
 
       if(res < 0) {
           Tcl_SetResult (interp, (char *)"bind data failed", NULL);
-	  return TCL_ERROR;
+          return TCL_ERROR;
       }
 
       Tcl_SetObjResult(interp, Tcl_NewBooleanObj(1));
@@ -954,14 +964,14 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
       col_info = cci_get_result_info (pStmt->request, &stmt_type, &col_count);
       if (col_info == NULL) {
           Tcl_SetResult (interp, (char *)"get result info fail", NULL);
-	  return TCL_ERROR;
+          return TCL_ERROR;
       }
 
       error = cci_fetch (pStmt->request, &cci_error);
       if (error < 0) {
           errorStr = cci_error.err_msg;
           Tcl_SetResult (interp, errorStr, NULL);
-          
+
           return TCL_ERROR;
       }
 
@@ -1056,9 +1066,9 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
                         tm1.tm_mon = date.mon - 1;
                         tm1.tm_mday = date.day;
                         strftime(tbuf,sizeof(tbuf),"%Y/%m/%d %H:%M:%S.00", &tm1);
-                    } 
+                    }
 
-                    Tcl_ListObjAppendElement(interp, pResultStr, Tcl_NewStringObj(tbuf, -1)); 
+                    Tcl_ListObjAppendElement(interp, pResultStr, Tcl_NewStringObj(tbuf, -1));
                 }
 
                 break;
@@ -1223,14 +1233,14 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
       col_info = cci_get_result_info (pStmt->request, &stmt_type, &col_count);
       if (col_info == NULL) {
           Tcl_SetResult (interp, (char *)"get result info fail", NULL);
-	  return TCL_ERROR;
+          return TCL_ERROR;
       }
 
       error = cci_fetch (pStmt->request, &cci_error);
       if (error < 0) {
           errorStr = cci_error.err_msg;
           Tcl_SetResult (interp, errorStr, NULL);
-          
+
           return TCL_ERROR;
       }
 
@@ -1289,7 +1299,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
                   Tcl_SetResult (interp, (char *)"get data failed", NULL);
                   return TCL_ERROR;
                 }
- 
+
                 if (ind < 0) {
                     /*
                      * If a value is NULL, the returned dictionary for the
@@ -1492,7 +1502,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
       }
 
       Tcl_SetObjResult(interp, pResultStr);
-      break;        
+      break;
     }
 
     case STMT_COLUMNS: {
@@ -1603,6 +1613,8 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
          pResultStr = Tcl_NewStringObj("sequence", -1);
       } else if(type == CCI_U_TYPE_ENUM) {
          pResultStr = Tcl_NewStringObj("enum", -1);
+      } else if(type == CCI_U_TYPE_JSON) {
+         pResultStr = Tcl_NewStringObj("json", -1);
       } else {
          pResultStr = Tcl_NewStringObj("", -1);
       }
@@ -1759,7 +1771,7 @@ static int DbObjCmd(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*objv){
       if( objc == 3){
         if(Tcl_GetIntFromObj(interp, objv[2], &autocommit) != TCL_OK) {
             return TCL_ERROR;
-	}
+        }
 
         if (autocommit < 0) {
             return TCL_ERROR;
@@ -1768,7 +1780,7 @@ static int DbObjCmd(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*objv){
         Tcl_WrongNumArgs(interp, 2, objv, "autocommit");
         return TCL_ERROR;
       }
-  
+
       if (autocommit==0) {
           mode = CCI_AUTOCOMMIT_FALSE;
       } else {
@@ -1967,7 +1979,7 @@ static int DbObjCmd(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*objv){
 
       res = cci_get_db_version(pDb->connection, ver_str, 255);
       if(res < 0) {
-	return TCL_ERROR;
+        return TCL_ERROR;
       } else {
         Tcl_SetObjResult(interp, Tcl_NewStringObj(ver_str, -1));
       }
@@ -2113,10 +2125,10 @@ static int CUBRID_MAIN(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
 
   Tcl_MutexLock(&cubridMutex);
   if (cubridRefCount == 0) {
-	if ((cubridLoadHandle = CubridInitStubs(interp)) == NULL) {
-	    Tcl_MutexUnlock(&cubridMutex);
-	    return TCL_ERROR;
-	}
+    if ((cubridLoadHandle = CubridInitStubs(interp)) == NULL) {
+        Tcl_MutexUnlock(&cubridMutex);
+        return TCL_ERROR;
+    }
   }
   ++cubridRefCount;
   Tcl_MutexUnlock(&cubridMutex);
@@ -2130,10 +2142,10 @@ static int CUBRID_MAIN(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
   memset(p, 0, sizeof(*p));
 
   if (properties && strlen(properties) > 0) {
-      snprintf(connect_url, sizeof(connect_url), "cci:CUBRID:%s:%d:%s:::?%s", 
+      snprintf(connect_url, sizeof(connect_url), "cci:CUBRID:%s:%d:%s:::?%s",
                host, port, dbname, properties);
   } else {
-      snprintf(connect_url, sizeof(connect_url), "cci:CUBRID:%s:%d:%s:::", 
+      snprintf(connect_url, sizeof(connect_url), "cci:CUBRID:%s:%d:%s:::",
                host, port, dbname);
   }
 
@@ -2174,13 +2186,13 @@ static int CUBRID_MAIN(void *cd, Tcl_Interp *interp, int objc,Tcl_Obj *const*obj
  *
  * Cubrid_Init --
  *
- *	Initialize the new package.
+ *  Initialize the new package.
  *
  * Results:
- *	A standard Tcl result
+ *  A standard Tcl result
  *
  * Side effects:
- *	The Cubrid package is created.
+ *  The Cubrid package is created.
  *
  *----------------------------------------------------------------------
  */
@@ -2189,10 +2201,10 @@ int
 Cubrid_Init(Tcl_Interp *interp)
 {
     if (Tcl_InitStubs(interp, "8.6", 0) == NULL) {
-	return TCL_ERROR;
+        return TCL_ERROR;
     }
     if (Tcl_PkgProvide(interp, PACKAGE_NAME, PACKAGE_VERSION) != TCL_OK) {
-	return TCL_ERROR;
+        return TCL_ERROR;
     }
 
     /*

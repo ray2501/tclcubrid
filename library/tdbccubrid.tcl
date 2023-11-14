@@ -115,7 +115,7 @@ package provide tdbc::cubrid 0.9.5
                        [namespace current]::DB setIsolationLevel repeatablread
                     }
                     s - se - ser - seri - seria - serial - seriali -
-                    serializ - serializa - serializab - serializabl - 
+                    serializ - serializa - serializab - serializabl -
                     serializable {
                        [namespace current]::DB setIsolationLevel serializable
                     }
@@ -426,7 +426,7 @@ package provide tdbc::cubrid 0.9.5
                           real float double monetary date time timestamp \
                           timestamptz timestampltz bigint datetime datetimetz \
                           datetimeltz clob blob set multiset sequence \
-                          enum null}} {
+                          enum json null}} {
                 dict set value type $type
             }
         }
