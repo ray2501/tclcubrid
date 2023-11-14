@@ -197,7 +197,7 @@ The `execute` object command executes the statement.
 Example
 =====
 
-I test below examples at version 10.0.0 (1376).
+I test below examples at version 11.3.0 (1089).
 
 ## tclcubrid example
 

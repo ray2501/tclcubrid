@@ -9,7 +9,7 @@
 package require tdbc
 package require cubrid
 
-package provide tdbc::cubrid 0.9.5
+package provide tdbc::cubrid 0.9.6
 
 
 ::namespace eval ::tdbc::cubrid {

@@ -4,11 +4,11 @@
 
 Name:          tclcubrid
 Summary:       Tcl wrapper for CUBRID CCI Client Interface
-Version:       0.9.5
+Version:       0.9.6
 Release:       1
 License:       MIT
 Group:         Development/Libraries/Tcl
-Source:        https://github.com/ray2501/tclcubrid/tclcubrid_0.9.5.zip
+Source:        https://github.com/ray2501/tclcubrid/%{name}-%{version}.tar.gz
 URL:           https://github.com/ray2501/tclcubrid
 BuildRequires: autoconf
 BuildRequires: make
@@ -23,7 +23,7 @@ connect CUBRID database.
 This extension is using Tcl_LoadFile to load CCI library.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{version}
 
 %build
 CFLAGS="%optflags" ./configure \
