@@ -1,0 +1,75 @@
+# tdbccubrid.test --
+#
+#	Tests for the tdbc::cubrid extesnion
+#
+
+configure -loadfile "library/tdbccubrid.tcl"
+loadTestedCommands
+package require tdbc::cubrid
+
+set testhost localhost
+set testport 33000
+set database demo
+set username public
+set password ""
+
+#-------------------------------------------------------------------------------
+
+test tdbccubrid-1.1 {open a database, wrong # args} {*}{
+    -body {
+	tdbc::cubrid::connection create db
+    }
+    -returnCodes error
+    -match glob
+    -result {wrong # args*}
+}
+
+test tdbccubrid-1.2 {open a database} {*}{
+    -body {
+    set result [catch \
+      {tdbc::cubrid::connection create db $testhost $testport $database $username $password}]
+    }
+    -result 0
+}
+
+#-------------------------------------------------------------------------------
+
+test tdbccubrid-2.1 {prepare, wrong # args} {*}{
+    -body {
+    set stmt [db prepare]
+    }
+    -returnCodes error
+    -match glob
+    -result {wrong # args*}
+}
+
+test tdbccubrid-2.2 {prepare, as dicts} {*}{
+    -body {
+      set stmt [db prepare {select 'Hello World!' as msg}]
+      set rst [$stmt execute]
+      $rst nextrow -as dicts variable
+      $rst close
+      $stmt close
+      string compare "Hello World!" [dict get $variable msg]
+    }
+    -result 0
+}
+
+test tdbccubrid-2.3 {prepare, as lists} {*}{
+    -body {
+      set stmt [db prepare {select 1+1 as result}]
+      set rst [$stmt execute]
+      $rst nextrow -as lists variable
+      $rst close
+      $stmt close
+      expr [lindex $variable 0]==2
+    }
+    -result 1
+}
+
+#-------------------------------------------------------------------------------
+
+catch {db close}
+
+cleanupTests
+return
