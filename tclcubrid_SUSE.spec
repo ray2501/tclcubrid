@@ -4,7 +4,7 @@
 
 Name:          tclcubrid
 Summary:       Tcl wrapper for CUBRID CCI Client Interface
-Version:       0.9.6
+Version:       0.9.7
 Release:       1
 License:       MIT
 Group:         Development/Libraries/Tcl
