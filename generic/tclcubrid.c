@@ -233,7 +233,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,
         int res;
         int index;
         char *type;
-        int len;
+        Tcl_Size len;
         T_CCI_U_TYPE utype;
         T_CCI_A_TYPE atype;
         T_CCI_ERROR cci_error;
@@ -255,7 +255,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,
         int *set_null = NULL;
         Tcl_Obj *elementPtr = NULL;
         char *stringPtr = NULL;
-        int strLength = 0;
+        Tcl_Size strLength = 0;
         T_CCI_SET set = NULL;
         int count = 0;
 
@@ -474,7 +474,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,
             utype = CCI_U_TYPE_BIGINT;
             atype = CCI_A_TYPE_BIGINT;
 
-            if (Tcl_GetWideIntFromObj(interp, objv[4], &int64_val) != TCL_OK) {
+            if (Tcl_GetWideIntFromObj(interp, objv[4], (Tcl_WideInt *) &int64_val) != TCL_OK) {
                 return TCL_ERROR;
             }
 
@@ -927,7 +927,7 @@ static int CUBRID_STMT(void *cd, Tcl_Interp *interp, int objc,
     case STMT_CURSOR: {
         int offset = 0;
         char *pos = NULL;
-        int len = 0;
+        Tcl_Size len = 0;
         T_CCI_CURSOR_POS origin;
         T_CCI_ERROR cci_error;
         int error;
@@ -1941,7 +1941,7 @@ static int DbObjCmd(void *cd, Tcl_Interp *interp, int objc,
         T_CCI_DB_PARAM param_name = CCI_PARAM_ISOLATION_LEVEL;
         T_CCI_ERROR cci_error;
         int level = 0;
-        int len = 0;
+        Tcl_Size len = 0;
         char *setLevel = NULL;
         Tcl_Obj *return_obj;
 
@@ -2025,7 +2025,7 @@ static int DbObjCmd(void *cd, Tcl_Interp *interp, int objc,
     case DB_PREPARE: {
         char *zQuery = NULL;
         char *errorStr = NULL;
-        int len = 0;
+        Tcl_Size len = 0;
         Tcl_HashEntry *newHashEntryPtr;
         char handleName[16 + TCL_INTEGER_SPACE];
         Tcl_Obj *pResultStr = NULL;
@@ -2318,7 +2318,7 @@ static int CUBRID_MAIN(void *cd, Tcl_Interp *interp, int objc,
  */
 
 int Cubrid_Init(Tcl_Interp *interp) {
-    if (Tcl_InitStubs(interp, "8.6", 0) == NULL) {
+    if (Tcl_InitStubs(interp, TCL_VERSION, 0) == NULL) {
         return TCL_ERROR;
     }
     if (Tcl_PkgProvide(interp, PACKAGE_NAME, PACKAGE_VERSION) != TCL_OK) {
